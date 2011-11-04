@@ -38,9 +38,9 @@ METADATA = dict(
     ],
     zip_safe=False,
     packages=find_packages(),
-    package_data={}
+    package_data={'': ['*.html']}
 )
-METADATA['package_data'].update({'socialregistration': find_package_data('socialregistration', ['templates', 'contrib'], '.html')})
+#METADATA['package_data'].update({'socialregistration': find_package_data('socialregistration', ['templates', 'contrib'], '.html')})
 
 if __name__ == '__main__':
     setup(**METADATA)
