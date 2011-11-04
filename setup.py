@@ -1,6 +1,19 @@
 #!/usr/bin/env python
 from setuptools import setup, find_packages
 import socialregistration
+import os
+import sys
+
+def find_package_data(pymodule, paths, match=None):
+    result = []
+    for root, dirs, files in os.walk(pymodule):
+        for p in paths:
+            if os.path.join(pymodule, p) in root:
+                for f in files:
+                    if match and not match in f:
+                        continue
+                    result.append(os.path.join(root.replace('%s/' % pymodule, ''), f))
+    return result
 
 METADATA = dict(
     name='django-socialregistration',
@@ -25,13 +38,9 @@ METADATA = dict(
     ],
     zip_safe=False,
     packages=find_packages(),
-    package_data={
-        'socialregistration': [
-            'templates/*',
-            'contrib/*/templates/*'
-        ]
-    }
+    package_data={}
 )
+METADATA['package_data'].update({'socialregistration': find_package_data('socialregistration', ['templates', 'contrib'], '.html')})
 
 if __name__ == '__main__':
     setup(**METADATA)
